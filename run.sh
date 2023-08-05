@@ -213,7 +213,7 @@ fi
 echo "============data clean=========="
 
 if [ $stage -le 15 ]; then
-  local/download_and_untar.sh $data $data_url train-clean-360
+  # local/download_and_untar.sh $data $data_url train-clean-360
   echo "data prep started here..."
   # now add the "clean-360" subset to the mix ...
   local/data_prep.sh \
