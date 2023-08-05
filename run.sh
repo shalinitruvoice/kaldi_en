@@ -286,9 +286,9 @@ if [ $stage -le 18 ]; then
       steps/lmrescore_const_arpa.sh \
         --cmd "$decode_cmd" data/lang_test_tgsmall \
         data/$test exp/tri6b/decode_tgsmall_$test
-      steps/lmrescore_const_arpa.sh \
-        --cmd "$decode_cmd" data/lang_test_tgsmall \
-        data/$test exp/tri6b/decode_tgsmall_$test
+      # steps/lmrescore_const_arpa.sh \
+      #   --cmd "$decode_cmd" data/lang_test_tgsmall \
+      #   data/$test exp/tri6b/decode_tgsmall_$test
   done
 fi
 
