@@ -250,7 +250,7 @@ echo "============data clean=========="
 
 if [ $stage -le 17 ]; then
   # prepare the remaining 500 hours of data
-  local/download_and_untar.sh $data $data_url train-other-500
+  # local/download_and_untar.sh $data $data_url train-other-500
 
   # prepare the 500 hour subset.
   local/data_prep.sh \
