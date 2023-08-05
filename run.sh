@@ -10,7 +10,7 @@ data=./corpus/
 data_url=www.openslr.org/resources/12
 lm_url=www.openslr.org/resources/11
 mfccdir=mfcc
-stage=0
+stage=3
 echo "============data and lm downloaded=========="
 
 . ./cmd.sh
@@ -36,7 +36,7 @@ if [ $stage -le 1 ]; then
 fi
 # download the LM resources
 # lownload LM resources
-# local/download_lm.sh $lm_url data/local/lm
+#local/download_lm.sh $lm_url data/local/lm
 echo "============data and lm download compl=========="
 
 if [ $stage -le 2 ]; then
@@ -233,12 +233,12 @@ fi
 if [ $stage -le 16 ]; then
   echo "Speaker adaptive training alignment"
   # align the new, combined set, using the tri4b model
-  # steps/align_fmllr.sh --nj 40 --cmd "$train_cmd" \
-  #                      data/train_clean_460 data/lang exp/tri4b exp/tri4b_ali_clean_460
+  steps/align_fmllr.sh --nj 40 --cmd "$train_cmd" \
+                       data/train_clean_460 data/lang exp/tri4b exp/tri4b_ali_clean_460
   echo "SAT started"
   # create a larger SAT model, trained on the 460 hours of data.
-  # steps/train_sat.sh  --cmd "$train_cmd" 5000 100000 \
-  #                     data/train_clean_460 data/lang exp/tri4b_ali_clean_460 exp/tri5b
+  steps/train_sat.sh  --cmd "$train_cmd" 5000 100000 \
+                      data/train_clean_460 data/lang exp/tri4b_ali_clean_460 exp/tri5b
 fi
 
 echo "============data clean=========="
@@ -267,17 +267,17 @@ fi
 echo "============data clean=========="
 
 if [ $stage -le 18 ]; then
-  # steps/align_fmllr.sh --nj 40 --cmd "$train_cmd" \
-  #                      data/train_960 data/lang exp/tri5b exp/tri5b_ali_960
+  steps/align_fmllr.sh --nj 40 --cmd "$train_cmd" \
+                       data/train_960 data/lang exp/tri5b exp/tri5b_ali_960
 
-  # # train a SAT model on the 960 hour mixed data.  Use the train_quick.sh script
-  # # as it is faster.
-  # steps/train_quick.sh --cmd "$train_cmd" \
-  #                      7000 150000 data/train_960 data/lang exp/tri5b_ali_960 exp/tri6b
+  # train a SAT model on the 960 hour mixed data.  Use the train_quick.sh script
+  # as it is faster.
+  steps/train_quick.sh --cmd "$train_cmd" \
+                       7000 150000 data/train_960 data/lang exp/tri5b_ali_960 exp/tri6b
 
-  # # decode using the tri6b model
-  # utils/mkgraph.sh data/lang_test_tgsmall \
-                  #  exp/tri6b exp/tri6b/graph_tgsmall
+  # decode using the tri6b model
+  utils/mkgraph.sh data/lang_test_tgsmall \
+                   exp/tri6b exp/tri6b/graph_tgsmall
   for test in test_clean test_other dev_clean dev_other; do
       steps/decode_fmllr.sh --nj 20 --cmd "$decode_cmd" \
                             exp/tri6b/graph_tgsmall data/$test exp/tri6b/decode_tgsmall_$test
