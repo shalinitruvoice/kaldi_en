@@ -15,7 +15,7 @@ echo "============data and lm downloaded=========="
 
 . ./cmd.sh
 . ./path.sh
-. parse_options.sh
+. ./utils/parse_options.sh
 
 # you might not want to do this for interactive shells.
 set -e
