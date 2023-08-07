@@ -10,7 +10,7 @@ data=./corpus/
 data_url=www.openslr.org/resources/12
 lm_url=www.openslr.org/resources/11
 mfccdir=mfcc
-stage=15
+stage=0
 echo "============data and lm downloaded=========="
 
 . ./cmd.sh
@@ -213,7 +213,7 @@ fi
 echo "============data clean=========="
 
 if [ $stage -le 15 ]; then
-  #local/download_and_untar.sh $data $data_url train-clean-360
+  local/download_and_untar.sh $data $data_url train-clean-360
   echo "data prep started here..."
   # now add the "clean-360" subset to the mix ...
   local/data_prep.sh \
@@ -267,20 +267,20 @@ fi
 echo "============data clean=========="
 
 if [ $stage -le 18 ]; then
-  # steps/align_fmllr.sh --nj 40 --cmd "$train_cmd" \
-  #                      data/train_960 data/lang exp/tri5b exp/tri5b_ali_960
+  steps/align_fmllr.sh --nj 40 --cmd "$train_cmd" \
+                       data/train_960 data/lang exp/tri5b exp/tri5b_ali_960
 
-  # # train a SAT model on the 960 hour mixed data.  Use the train_quick.sh script
-  # # as it is faster.
-  # steps/train_quick.sh --cmd "$train_cmd" \
-  #                      7000 150000 data/train_960 data/lang exp/tri5b_ali_960 exp/tri6b
+  # train a SAT model on the 960 hour mixed data.  Use the train_quick.sh script
+  # as it is faster.
+  steps/train_quick.sh --cmd "$train_cmd" \
+                       7000 150000 data/train_960 data/lang exp/tri5b_ali_960 exp/tri6b
 
-  # # decode using the tri6b model
-  # utils/mkgraph.sh data/lang_test_tgsmall \
-  #                  exp/tri6b exp/tri6b/graph_tgsmall
+  # decode using the tri6b model
+  utils/mkgraph.sh data/lang_test_tgsmall \
+                   exp/tri6b exp/tri6b/graph_tgsmall
   for test in test_clean test_other dev_clean dev_other; do
-      # steps/decode_fmllr.sh --nj 20 --cmd "$decode_cmd" \
-      #                       exp/tri6b/graph_tgsmall data/$test exp/tri6b/decode_tgsmall_$test
+      steps/decode_fmllr.sh --nj 20 --cmd "$decode_cmd" \
+                            exp/tri6b/graph_tgsmall data/$test exp/tri6b/decode_tgsmall_$test
       steps/lmrescore.sh --cmd "$decode_cmd" data/lang_test_{tgsmall,tgmed} \
                          data/$test exp/tri6b/decode_{tgsmall,tgmed}_$test
       steps/lmrescore_const_arpa.sh \
@@ -321,10 +321,10 @@ fi
 #     --rnnlm-tag "h150-me3-400-nce20" $data data/local/lm
 
 
-# if [ $stage -le 20 ]; then
-#   # train and test nnet3 tdnn models on the entire data with data-cleaning.
-#   local/chain/run_tdnn.sh # set "--stage 11" if you have already run local/nnet3/run_tdnn.sh
-# fi
+if [ $stage -le 20 ]; then
+  # train and test nnet3 tdnn models on the entire data with data-cleaning.
+  local/chain/run_tdnn.sh # set "--stage 11" if you have already run local/nnet3/run_tdnn.sh
+fi
 
 # The nnet3 TDNN recipe:
 # local/nnet3/run_tdnn.sh # set "--stage 11" if you have already run local/chain/run_tdnn.sh
