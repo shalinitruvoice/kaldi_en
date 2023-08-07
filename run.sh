@@ -10,7 +10,7 @@ data=./corpus/
 data_url=www.openslr.org/resources/12
 lm_url=www.openslr.org/resources/11
 mfccdir=mfcc
-stage=0
+stage=2
 echo "============data and lm downloaded=========="
 
 . ./cmd.sh
@@ -36,7 +36,7 @@ if [ $stage -le 1 ]; then
 fi
 # download the LM resources
 # lownload LM resources
-#local/download_lm.sh $lm_url data/local/lm
+local/download_lm.sh $lm_url data/local/lm
 echo "============data and lm download compl=========="
 
 if [ $stage -le 2 ]; then
