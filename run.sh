@@ -10,7 +10,7 @@ data=./corpus/
 data_url=www.openslr.org/resources/12
 lm_url=www.openslr.org/resources/11
 mfccdir=mfcc
-stage=3
+stage=16
 echo "============data and lm downloaded=========="
 
 . ./cmd.sh
@@ -232,9 +232,9 @@ fi
 
 if [ $stage -le 16 ]; then
   echo "Speaker adaptive training alignment"
-  # align the new, combined set, using the tri4b model
-  steps/align_fmllr.sh --nj 40 --cmd "$train_cmd" \
-                       data/train_clean_460 data/lang exp/tri4b exp/tri4b_ali_clean_460
+  # # align the new, combined set, using the tri4b model
+  # steps/align_fmllr.sh --nj 40 --cmd "$train_cmd" \
+  #                      data/train_clean_460 data/lang exp/tri4b exp/tri4b_ali_clean_460
   echo "SAT started"
   # create a larger SAT model, trained on the 460 hours of data.
   steps/train_sat.sh  --cmd "$train_cmd" 5000 100000 \
@@ -250,7 +250,7 @@ echo "============data clean=========="
 
 if [ $stage -le 17 ]; then
   # prepare the remaining 500 hours of data
-  # local/download_and_untar.sh $data $data_url train-other-500
+  local/download_and_untar.sh $data $data_url train-other-500
 
   # prepare the 500 hour subset.
   local/data_prep.sh \
