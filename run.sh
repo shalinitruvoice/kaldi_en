@@ -193,10 +193,10 @@ if [ $stage -le 13 ]; then
                         "<UNK>" data/local/lang_tmp data/lang
   local/format_lms.sh --src-dir data/lang data/local/lm
 
-  # utils/build_const_arpa_lm.sh \
-  #   data/local/lm/lm_tglarge.arpa.gz data/lang data/lang_test_tglarge
-  # utils/build_const_arpa_lm.sh \
-  #   data/local/lm/lm_fglarge.arpa.gz data/lang data/lang_test_fglarge
+  utils/build_const_arpa_lm.sh \
+    data/local/lm/lm_tglarge.arpa.gz data/lang data/lang_test_tglarge
+  utils/build_const_arpa_lm.sh \
+    data/local/lm/lm_fglarge.arpa.gz data/lang data/lang_test_fglarge
 fi
 echo "============fmllr align=========="
 
