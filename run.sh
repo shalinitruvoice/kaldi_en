@@ -10,7 +10,7 @@ data=./corpus/
 data_url=www.openslr.org/resources/12
 lm_url=www.openslr.org/resources/11
 mfccdir=mfcc
-stage=19
+stage=20
 echo "============ data and lm downloaded=========="
 
 . ./cmd.sh
@@ -324,7 +324,7 @@ fi
 
 if [ $stage -le 20 ]; then
   # train and test nnet3 tdnn models on the entire data with data-cleaning.
-  local/chain/run_tdnn.sh # set "--stage 11" if you have already run local/nnet3/run_tdnn.sh
+  local/chain/tuning/run_tdnn_1d.sh # set "--stage 11" if you have already run local/nnet3/run_tdnn.sh
 fi
 
 # The nnet3 TDNN recipe:
