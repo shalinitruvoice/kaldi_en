@@ -11,7 +11,7 @@ data_url=www.openslr.org/resources/12
 lm_url=www.openslr.org/resources/11
 mfccdir=mfcc
 stage=0
-echo "============data and lm downloaded=========="
+echo "============ data and lm downloaded=========="
 
 . ./cmd.sh
 . ./path.sh
