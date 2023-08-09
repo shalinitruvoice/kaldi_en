@@ -32,7 +32,7 @@ if [ $stage -le 1 ]; then
 
 
   # download the LM resources
-  local/download_lm.sh $lm_url data/local/lm
+  # local/download_lm.sh $lm_url data/local/lm
 fi
 # download the LM resources
 # lownload LM resources
