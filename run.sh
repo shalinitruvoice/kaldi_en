@@ -10,7 +10,7 @@ data=./corpus/
 data_url=www.openslr.org/resources/12
 lm_url=www.openslr.org/resources/11
 mfccdir=mfcc
-stage=0
+stage=2
 echo "============ data and lm downloaded=========="
 
 . ./cmd.sh
